@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  register_dn:
+    container_name: register_dn
+    build:
+      context: .
+    restart: always
+    ports:
+      - '4000:3000'
