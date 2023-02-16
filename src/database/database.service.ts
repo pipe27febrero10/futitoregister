@@ -24,6 +24,13 @@ export class DatabaseService {
     }
 
     async createAccount(username: string, password: string): Promise<any> {
+        const checkResult = await this.pool.request()
+        .input('AccountName', username)
+        .query(`SELECT AccountName FROM Accounts WHERE AccountName=@AccountName`);
+        if (checkResult.recordset.length > 0) {
+            throw new Error('User already exists');
+        }
+    
         const result = await this.pool.request()
             .input('AccountName', username)
             .input('NxLoginPwd', password)
